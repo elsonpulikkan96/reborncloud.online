@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - {{ config.TITLE }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="error-page">
+                <i class="fas fa-server fa-5x text-danger mb-4"></i>
+                <h1 class="display-1 fw-bold text-primary">500</h1>
+                <h2 class="mb-4">Internal Server Error</h2>
+                <p class="lead mb-4">Something went wrong on our end. Please try again later.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ url_for('main.bio') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-home me-2"></i>Go Home
+                    </a>
+                    <a href="{{ url_for('main.contact') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Report Issue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Technical Skills - {{ data.personal_info.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row text-center mb-5">
+        <h1 class="display-5 fw-bold">Technical Skills</h1>
+        <p class="lead text-muted">Comprehensive expertise across cloud platforms, automation, and DevOps tools</p>
+    </div>
+    <div class="row">
+        {% for category, skill_data in data.skills.items() %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0 skill-card">
+                <div class="card-body text-center">
+                    <div class="skill-icon text-primary mb-3">
+                        <i class="{{ skill_data.icon }} fa-3x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">{{ category }}</h5>
+                    <div class="skills-list">
+                        {% for skill in skill_data.skills %}
+                        <span class="badge bg-light text-dark border me-2 mb-2 skill-badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
