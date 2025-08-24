@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, jsonify, send_file, current_app
+from flask import Blueprint, render_template, jsonify, send_file, current_app, request, session, flash, redirect, url_for
+from app import limiter
 from datetime import datetime
 import os
+import requests
+import secrets
+import time
 
 main = Blueprint('main', __name__)
 
@@ -239,6 +243,59 @@ RESUME_DATA = {
     ]
 }
 
+# Security Helper Functions
+def verify_recaptcha(recaptcha_response):
+    """Verify reCAPTCHA response with Google"""
+    if not current_app.config.get('RECAPTCHA_SECRET_KEY'):
+        return True  # Skip verification if not configured
+    
+    secret_key = current_app.config['RECAPTCHA_SECRET_KEY']
+    verify_url = 'https://www.google.com/recaptcha/api/siteverify'
+    
+    data = {
+        'secret': secret_key,
+        'response': recaptcha_response,
+        'remoteip': request.environ.get('REMOTE_ADDR')
+    }
+    
+    try:
+        response = requests.post(verify_url, data=data, timeout=10)
+        result = response.json()
+        return result.get('success', False)
+    except Exception as e:
+        current_app.logger.error(f"reCAPTCHA verification failed: {str(e)}")
+        return False
+
+def generate_download_token():
+    """Generate a secure download token"""
+    token = secrets.token_urlsafe(32)
+    session['download_token'] = token
+    session['download_token_time'] = time.time()
+    return token
+
+def verify_download_token(token):
+    """Verify download token and check expiry (5 minutes)"""
+    if not token or 'download_token' not in session:
+        return False
+    
+    if session.get('download_token') != token:
+        return False
+    
+    # Check if token is expired (5 minutes)
+    token_time = session.get('download_token_time', 0)
+    if time.time() - token_time > 300:  # 5 minutes
+        session.pop('download_token', None)
+        session.pop('download_token_time', None)
+        return False
+    
+    return True
+
+def log_download_attempt(ip_address, success=False, reason=""):
+    """Log download attempts for security monitoring"""
+    timestamp = datetime.now().isoformat()
+    log_entry = f"[{timestamp}] Resume download - IP: {ip_address}, Success: {success}, Reason: {reason}"
+    current_app.logger.info(log_entry)
+
 @main.route('/')
 def index():
     return render_template('bio.html', data=RESUME_DATA, current_page='bio')
@@ -271,16 +328,109 @@ def projects():
 def api_resume():
     return jsonify(RESUME_DATA)
 
-@main.route('/download-resume')
-def download_resume():
+@main.route('/resume-access')
+def resume_access():
+    """Show secure resume access page with reCAPTCHA"""
+    return render_template('resume_access.html', 
+                         data=RESUME_DATA,
+                         recaptcha_site_key=current_app.config.get('RECAPTCHA_SITE_KEY'),
+                         current_page='resume')
+
+@main.route('/verify-access', methods=['POST'])
+@limiter.limit("10 per minute")
+def verify_access():
+    """Verify reCAPTCHA and generate download token"""
+    ip_address = request.environ.get('REMOTE_ADDR', 'unknown')
+    
     try:
+        # Get email from form
+        email = request.form.get('email', '').strip()
+        
+        # Validate email
+        if not email:
+            log_download_attempt(ip_address, False, "No email provided")
+            flash('Please provide your email address.', 'error')
+            return redirect(url_for('main.resume_access'))
+        
+        # Check if reCAPTCHA is configured
+        recaptcha_configured = bool(current_app.config.get('RECAPTCHA_SECRET_KEY'))
+        
+        # Skip reCAPTCHA verification if not configured
+        if not recaptcha_configured:
+            # Generate download token directly
+            token = generate_download_token()
+            log_download_attempt(ip_address, True, f"Access verified for {email}")
+            flash('Verification successful! Download starting...', 'success')
+            return redirect(url_for('main.download_resume', token=token))
+        
+        # Production mode - require reCAPTCHA
+        recaptcha_response = request.form.get('g-recaptcha-response')
+        
+        if not recaptcha_response:
+            log_download_attempt(ip_address, False, "No reCAPTCHA response")
+            flash('Please complete the reCAPTCHA verification.', 'error')
+            return redirect(url_for('main.resume_access'))
+        
+        # Verify reCAPTCHA
+        if not verify_recaptcha(recaptcha_response):
+            log_download_attempt(ip_address, False, "reCAPTCHA verification failed")
+            flash('reCAPTCHA verification failed. Please try again.', 'error')
+            return redirect(url_for('main.resume_access'))
+        
+        # Generate download token
+        token = generate_download_token()
+        log_download_attempt(ip_address, True, f"Access verified for {email}")
+        
+        flash('Verification successful! Download starting...', 'success')
+        return redirect(url_for('main.download_resume', token=token))
+        
+    except Exception as e:
+        current_app.logger.error(f"Access verification error: {str(e)}")
+        log_download_attempt(ip_address, False, f"Error: {str(e)}")
+        flash('An error occurred during verification. Please try again.', 'error')
+        return redirect(url_for('main.resume_access'))
+
+@main.route('/download-resume')
+@limiter.limit("5 per hour")
+def download_resume():
+    """Secure resume download with token verification"""
+    ip_address = request.environ.get('REMOTE_ADDR', 'unknown')
+    token = request.args.get('token')
+    
+    try:
+        # Verify download token
+        if not verify_download_token(token):
+            log_download_attempt(ip_address, False, "Invalid or expired token")
+            flash('Please verify access to download.', 'error')
+            return redirect(url_for('main.resume_access'))
+        
+        # Clear the token after use
+        session.pop('download_token', None)
+        session.pop('download_token_time', None)
+        
+        # Serve the file
         pdf_path = os.path.join(current_app.static_folder, 'documents', 'Elson-Ealias-Resume-2025.pdf')
         if os.path.exists(pdf_path):
-            return send_file(pdf_path, as_attachment=True, download_name='Elson-Ealias-Resume-2025.pdf', mimetype='application/pdf')
+            log_download_attempt(ip_address, True, "File downloaded successfully")
+            return send_file(pdf_path, 
+                           as_attachment=True, 
+                           download_name='Elson-Ealias-Resume-2025.pdf', 
+                           mimetype='application/pdf')
         else:
+            log_download_attempt(ip_address, False, "Resume file not found")
             return jsonify({"error": "Resume file not found"}), 404
+            
     except Exception as e:
+        current_app.logger.error(f"Download error: {str(e)}")
+        log_download_attempt(ip_address, False, f"Download error: {str(e)}")
         return jsonify({"error": f"Download failed: {str(e)}"}), 500
+
+# Legacy route redirect for backward compatibility
+@main.route('/download-resume-legacy')
+def download_resume_legacy():
+    """Redirect legacy download requests to secure access page"""
+    flash('For security, resume downloads now require verification.', 'info')
+    return redirect(url_for('main.resume_access'))
 
 @main.route('/health')
 def health_check():

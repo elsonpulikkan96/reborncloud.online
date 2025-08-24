@@ -1,0 +1,16 @@
+{
+    "serviceName": "reborncloud-service",
+    "cluster": "reborncloud-cluster",
+    "taskDefinition": "reborncloud-task",
+    "desiredCount": 1,
+    "launchType": "FARGATE",
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": ["subnet-0e2b7406b24c27985","subnet-071d531a3e266125f"],
+            "securityGroups": ["sg-0b7a9064a549a44a1"],
+            "assignPublicIp": "ENABLED"
+        }
+    },
+    "loadBalancers": [],
+    "enableExecuteCommand": true
+}

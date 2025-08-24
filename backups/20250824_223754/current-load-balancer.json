@@ -1,0 +1,34 @@
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:ap-south-2:739275449845:loadbalancer/app/reborncloud-alb/74ef417d6e4c0aa8",
+            "DNSName": "reborncloud-alb-26918334.ap-south-2.elb.amazonaws.com",
+            "CanonicalHostedZoneId": "Z0173938T07WNTVAEPZN",
+            "CreatedTime": "2025-08-21T08:26:58.459000+00:00",
+            "LoadBalancerName": "reborncloud-alb",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-084d367ae40bc36ff",
+            "State": {
+                "Code": "active"
+            },
+            "Type": "application",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "ap-south-2a",
+                    "SubnetId": "subnet-071d531a3e266125f",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "ap-south-2b",
+                    "SubnetId": "subnet-0c630c3b99e495ddf",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "SecurityGroups": [
+                "sg-08a5e26671f5088ff"
+            ],
+            "IpAddressType": "ipv4",
+            "EnablePrefixForIpv6SourceNat": "off"
+        }
+    ]
+}

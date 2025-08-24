@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Access - {{ config.TITLE }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid bg-gradient-primary py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-xl-5">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h2 class="mb-0">
+                            <i class="fas fa-download me-3"></i>
+                            Resume Access
+                        </h2>
+                        <p class="mb-0 mt-2 opacity-75">Secure Download Verification</p>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <!-- Flash Messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' if category == 'success' else 'info' }} alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-{{ 'exclamation-triangle' if category == 'error' else 'check-circle' if category == 'success' else 'info-circle' }} me-2"></i>
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="text-center mb-4">
+                            <p class="text-muted mb-0">
+                                Please complete the verification below to download the resume.
+                            </p>
+                        </div>
+
+                        <form method="POST" action="{{ url_for('main.verify_access') }}" id="resumeAccessForm">
+                            
+                            <!-- Email Verification -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope me-1"></i>
+                                        Email Address
+                                    </label>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                           placeholder="Enter your email address" required>
+                                    <small class="text-muted">Required for verification purposes</small>
+                                </div>
+                            </div>
+
+                            <!-- Security Features -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card bg-light border-0">
+                                        <div class="card-body text-center py-3">
+                                            <div class="row">
+                                                <div class="col-4 mb-2">
+                                                    <small class="text-success">
+                                                        <i class="fas fa-shield-alt me-1"></i>
+                                                        Protected
+                                                    </small>
+                                                </div>
+                                                <div class="col-4 mb-2">
+                                                    <small class="text-success">
+                                                        <i class="fas fa-clock me-1"></i>
+                                                        Rate Limited
+                                                    </small>
+                                                </div>
+                                                <div class="col-4 mb-2">
+                                                    <small class="text-success">
+                                                        <i class="fas fa-key me-1"></i>
+                                                        Secure Token
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- reCAPTCHA -->
+                            {% if recaptcha_site_key %}
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card border-primary">
+                                        <div class="card-body text-center py-3">
+                                            <div class="d-flex justify-content-center mb-3">
+                                                <div class="g-recaptcha" 
+                                                     data-sitekey="{{ recaptcha_site_key }}"
+                                                     data-theme="light"
+                                                     data-size="normal">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100" id="verifyBtn">
+                                        <i class="fas fa-download me-2"></i>
+                                        Verify & Download Resume
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-lock me-1"></i>
+                                Secure verification process
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer text-center py-3 bg-light">
+                        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Back to Portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- reCAPTCHA Script -->
+{% if recaptcha_site_key %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('resumeAccessForm');
+    const verifyBtn = document.getElementById('verifyBtn');
+    
+    form.addEventListener('submit', function(e) {
+        verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
+        verifyBtn.disabled = true;
+    });
+});
+</script>
+
+<style>
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+</style>
+{% endblock %}

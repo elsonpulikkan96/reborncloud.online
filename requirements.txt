@@ -12,3 +12,5 @@ Pillow==10.1.0
 requests==2.31.0
 urllib3==2.1.0
 certifi==2023.11.17
+Flask-Limiter==3.5.0
+redis==5.0.1
