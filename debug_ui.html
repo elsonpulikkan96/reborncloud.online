@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Debug Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --info-color: #0dcaf0;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 1rem 2rem rgba(0, 0, 0, 0.25);
+            --border-radius: 0.5rem;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .hero-section {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center text-white">
+                    <div class="glass-card p-5">
+                        <h1 class="display-4 fw-bold mb-4">UI Debug Test</h1>
+                        <p class="lead mb-4">Testing modern UI components and styles</p>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="glass-card p-4 h-100">
+                                    <i class="fas fa-code fa-3x mb-3 text-warning"></i>
+                                    <h5>Modern CSS</h5>
+                                    <p>CSS Variables & Gradients</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="glass-card p-4 h-100">
+                                    <i class="fas fa-mobile-alt fa-3x mb-3 text-info"></i>
+                                    <h5>Responsive</h5>
+                                    <p>Bootstrap 5.3.2</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="glass-card p-4 h-100">
+                                    <i class="fas fa-palette fa-3x mb-3 text-success"></i>
+                                    <h5>Interactive</h5>
+                                    <p>Hover Effects & Animations</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.style.background = document.body.style.background === 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)' 
+                ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+                : 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)';
+        });
+    </script>
+</body>
+</html>
