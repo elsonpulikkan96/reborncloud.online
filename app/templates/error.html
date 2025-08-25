@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - {{ data.personal_info.name if data else 'Portfolio' }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .error-container {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .error-title {
+            color: #dc3545;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .error-message {
+            color: #6c757d;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .status-info {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-title">Oops! Something went wrong</h1>
+        <p class="error-message">{{ error or "An unexpected error occurred" }}</p>
+        <a href="/" class="back-link">← Back to Home</a>
+        
+        <div class="status-info">
+            <p><strong>Status:</strong> The application is running but encountered an error</p>
+            <p><strong>Time:</strong> {{ moment().format('YYYY-MM-DD HH:mm:ss') if moment else 'N/A' }}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Professional Experience - {{ data.personal_info.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row text-center mb-5">
+        <h1 class="display-5 fw-bold">Professional Experience</h1>
+        <p class="lead text-muted">{{ data.stats.years_experience }} years of expertise in cloud engineering and DevOps</p>
+    </div>
+
+    <div class="timeline">
+        {% for job in data.experience %}
+        <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h4 class="card-title text-primary fw-bold">{{ job.position }}</h4>
+                                <h5 class="text-muted">{{ job.company }}</h5>
+                                <p class="text-muted mb-0">
+                                    <i class="fas fa-map-marker-alt me-2"></i>{{ job.location }}
+                                </p>
+                            </div>
+                            <span class="badge bg-primary fs-6">{{ job.duration }}</span>
+                        </div>
+
+                        {% if job.description %}
+                        <p class="card-text mb-3">{{ job.description }}</p>
+                        {% endif %}
+
+                        {% if job.responsibilities %}
+                        <div class="mb-3">
+                            <h6 class="text-primary">Key Responsibilities:</h6>
+                            <ul class="list-unstyled">
+                                {% for responsibility in job.responsibilities %}
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>{{ responsibility }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        {% if job.projects %}
+                        <div class="mb-3">
+                            <h6 class="text-primary">Notable Projects:</h6>
+                            <ul class="list-unstyled">
+                                {% for project in job.projects %}
+                                <li class="mb-2">
+                                    <i class="fas fa-project-diagram text-info me-2"></i>{{ project }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        {% if job.technologies %}
+                        <div class="mt-3">
+                            <h6 class="text-primary">Technologies Used:</h6>
+                            <div class="d-flex flex-wrap">
+                                {% for tech in job.technologies %}
+                                <span class="badge bg-light text-dark border me-2 mb-2">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Experience Statistics -->
+    <section class="mt-5">
+        <div class="text-center mb-4">
+            <h2><i class="fas fa-chart-bar me-2"></i>Career Highlights</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-briefcase fa-2x text-primary mb-3"></i>
+                        <h3>{{ data.stats.years_experience }}</h3>
+                        <p class="text-muted">Years Experience</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-server fa-2x text-info mb-3"></i>
+                        <h3>{{ data.stats.uptime_achieved }}</h3>
+                        <p class="text-muted">System Uptime</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-clock fa-2x text-warning mb-3"></i>
+                        <h3>{{ data.stats.support_hours }}</h3>
+                        <p class="text-muted">Production Support</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-dollar-sign fa-2x text-success mb-3"></i>
+                        <h3>{{ data.stats.cost_savings }}</h3>
+                        <p class="text-muted">Cost Optimization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

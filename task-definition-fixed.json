@@ -1,0 +1,83 @@
+{
+    "family": "reborncloud-portfolio",
+    "taskRoleArn": "arn:aws:iam::739275449845:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::739275449845:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": ["FARGATE"],
+    "cpu": "256",
+    "memory": "512",
+    "containerDefinitions": [
+        {
+            "name": "reborncloud-app",
+            "image": "739275449845.dkr.ecr.ap-south-2.amazonaws.com/reborncloud-online:latest",
+            "cpu": 0,
+            "memory": 512,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp"
+                }
+            ],
+            "command": [
+                "gunicorn",
+                "--bind",
+                "0.0.0.0:8080",
+                "--workers",
+                "2",
+                "--timeout",
+                "60",
+                "--keep-alive",
+                "2",
+                "--max-requests",
+                "1000",
+                "run:app"
+            ],
+            "environment": [
+                {
+                    "name": "AWS_DEFAULT_REGION",
+                    "value": "ap-south-2"
+                },
+                {
+                    "name": "HOST",
+                    "value": "0.0.0.0"
+                },
+                {
+                    "name": "PYTHONUNBUFFERED",
+                    "value": "1"
+                },
+                {
+                    "name": "PORT",
+                    "value": "8080"
+                },
+                {
+                    "name": "FLASK_ENV",
+                    "value": "production"
+                },
+                {
+                    "name": "DEBUG",
+                    "value": "False"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/reborncloud-task",
+                    "awslogs-region": "ap-south-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8080/health || exit 1"
+                ],
+                "interval": 60,
+                "timeout": 10,
+                "retries": 3,
+                "startPeriod": 60
+            }
+        }
+    ]
+}

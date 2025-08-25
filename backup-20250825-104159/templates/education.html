@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Education & Certifications - {{ data.personal_info.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row text-center mb-5">
+        <h1 class="display-5 fw-bold">Education & Certifications</h1>
+        <p class="lead text-muted">Academic background and professional certifications</p>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="h3 mb-4 text-primary"><i class="fas fa-graduation-cap me-2"></i>Education</h2>
+        </div>
+        {% for edu in data.education %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0 education-card">
+                <div class="card-body">
+                    <div class="education-icon text-primary mb-3">
+                        <i class="fas fa-university fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">{{ edu.degree }}</h5>
+                    <h6 class="text-muted mb-3">{{ edu.institution }}</h6>
+                    <p class="mb-2"><i class="fas fa-calendar-alt me-2"></i>{{ edu.duration }}</p>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>{{ edu.location }}</p>
+                    {% if edu.grade %}
+                    <p class="mb-2"><i class="fas fa-star me-2"></i>{{ edu.grade }}</p>
+                    {% endif %}
+                    {% if edu.relevant_courses %}
+                    <div class="mt-3">
+                        <h6 class="text-primary">Key Courses:</h6>
+                        <div class="d-flex flex-wrap">
+                            {% for course in edu.relevant_courses %}
+                            <span class="badge bg-light text-dark border me-2 mb-2">{{ course }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2 class="h3 mb-4 text-primary"><i class="fas fa-certificate me-2"></i>Professional Certifications</h2>
+        </div>
+        {% for cert in data.certifications %}
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0 certification-card">
+                <div class="card-body text-center">
+                    <div class="cert-icon mb-3">
+                        <i class="{{ cert.icon }} fa-4x {% if 'aws' in cert.icon %}text-warning{% elif 'redhat' in cert.icon %}text-danger{% elif 'dharmachakra' in cert.icon %}text-primary{% else %}text-success{% endif %}"></i>
+                    </div>
+                    <h6 class="card-title fw-bold">{{ cert.name }}</h6>
+                    <p class="text-muted mb-2">{{ cert.issuer }}</p>
+                    {% if cert.issued %}
+                    <p class="mb-2"><span class="badge bg-primary">{{ cert.issued }}</span></p>
+                    {% endif %}
+                    {% if cert.code %}
+                    <p class="text-muted small">{{ cert.code }}</p>
+                    {% endif %}
+                    {% if cert.status %}
+                    <span class="badge bg-success">{{ cert.status }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

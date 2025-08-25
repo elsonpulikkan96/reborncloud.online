@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - {{ data.personal_info.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row text-center mb-5">
+        <h1 class="display-5 fw-bold">Get In Touch</h1>
+        <p class="lead text-muted">Let's discuss cloud infrastructure and DevOps opportunities</p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="row">
+                <!-- Contact Information -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold mb-4"><i class="fas fa-address-card me-2"></i>Contact Information</h5>
+                            <div class="contact-item mb-3">
+                                <div class="contact-icon"><i class="fas fa-envelope text-primary"></i></div>
+                                <div class="contact-details"><h6 class="mb-1">Email</h6><a href="mailto:{{ data.personal_info.email }}" class="text-decoration-none">{{ data.personal_info.email }}</a></div>
+                            </div>
+                            <div class="contact-item mb-3">
+                                <div class="contact-icon"><i class="fas fa-phone text-primary"></i></div>
+                                <div class="contact-details"><h6 class="mb-1">Phone</h6><a href="tel:{{ data.personal_info.phone }}" class="text-decoration-none">{{ data.personal_info.phone }}</a></div>
+                            </div>
+                            <div class="contact-item mb-3">
+                                <div class="contact-icon"><i class="fas fa-map-marker-alt text-primary"></i></div>
+                                <div class="contact-details"><h6 class="mb-1">Location</h6><span>{{ data.personal_info.location }}</span></div>
+                            </div>
+                            <div class="contact-item mb-0">
+                                <div class="contact-icon"><i class="fas fa-globe text-primary"></i></div>
+                                <div class="contact-details"><h6 class="mb-1">Website</h6><a href="{{ data.personal_info.website }}" target="_blank" class="text-decoration-none">reborncloud.online</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Form -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold mb-4"><i class="fas fa-paper-plane me-2"></i>Send a Message</h5>
+                            <form id="contact-form">
+                                <div class="mb-3"><label for="name" class="form-label">Full Name</label><input type="text" class="form-control" id="name" name="name" required></div>
+                                <div class="mb-3"><label for="email" class="form-label">Email Address</label><input type="email" class="form-control" id="email" name="email" required></div>
+                                <div class="mb-3"><label for="company" class="form-label">Company (Optional)</label><input type="text" class="form-control" id="company" name="company"></div>
+                                <div class="mb-3"><label for="subject" class="form-label">Subject</label><select class="form-select" id="subject" name="subject" required><option value="">Select a subject...</option><option value="Job Opportunity">Job Opportunity</option><option value="Consulting">Consulting Project</option><option value="Collaboration">Collaboration</option><option value="General Inquiry">General Inquiry</option></select></div>
+                                <div class="mb-4"><label for="message" class="form-label">Message</label><textarea class="form-control" id="message" name="message" rows="5" required></textarea></div>
+                                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-paper-plane me-2"></i>Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body text-center py-5">
+                            <h3 class="fw-bold mb-4">Connect With Me</h3>
+                            <div class="social-links-large">
+                                <a href="{{ data.personal_info.github }}" class="btn btn-outline-light btn-lg me-3 mb-3" target="_blank"><i class="fab fa-github me-2"></i>GitHub</a>
+                                <a href="{{ data.personal_info.linkedin }}" class="btn btn-outline-light btn-lg me-3 mb-3" target="_blank"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+                                <a href="{{ data.personal_info.medium }}" class="btn btn-outline-light btn-lg me-3 mb-3" target="_blank"><i class="fab fa-medium me-2"></i>Medium</a>
+                                <a href="{{ data.personal_info.website }}" class="btn btn-outline-light btn-lg mb-3" target="_blank"><i class="fas fa-globe me-2"></i>Website</a>
+                            </div>
+                            <p class="mt-4 mb-0">Available for cloud infrastructure projects and DevOps consulting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
