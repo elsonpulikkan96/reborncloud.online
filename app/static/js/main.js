@@ -1,10 +1,20 @@
 // Enhanced Portfolio JavaScript with Mobile Navigation Fix
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Modern UI Fix: Initializing...');
+    
+    // Force apply modern styles immediately
+    applyModernStyles();
+    
     // Initialize enhanced features
     initializeScrollReveal();
     initializeParticleSystem();
     initializeEnhancedAnimations();
     initializeMobileOptimizations();
+    
+    // Initialize all modern features
+    initializeModernFeatures();
+    
+    console.log('Modern UI Fix: Complete!');
     
     // Theme Toggle Functionality (Enhanced)
     const themeToggle = document.getElementById('themeToggle');
@@ -542,3 +552,134 @@ animationStyles.textContent = `
     }
 `;
 document.head.appendChild(animationStyles);
+// Modern UI Fix Functions
+function applyModernStyles() {
+    console.log('Applying modern styles...');
+    
+    // Force apply Inter font
+    document.body.style.fontFamily = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+    
+    // Ensure CSS variables are applied
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color', '#0d6efd');
+    root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)');
+    root.style.setProperty('--shadow', '0 0.5rem 1rem rgba(0, 0, 0, 0.15)');
+    root.style.setProperty('--transition', 'all 0.3s ease');
+    
+    // Apply gradient to hero sections
+    const heroSections = document.querySelectorAll('.hero-section, .bg-gradient-primary');
+    heroSections.forEach(section => {
+        section.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        section.style.color = 'white';
+    });
+    
+    // Apply glass card effects
+    const glassCards = document.querySelectorAll('.glass-card');
+    glassCards.forEach(card => {
+        card.style.background = 'rgba(255, 255, 255, 0.1)';
+        card.style.backdropFilter = 'blur(10px)';
+        card.style.webkitBackdropFilter = 'blur(10px)';
+        card.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+        card.style.borderRadius = '0.5rem';
+        card.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
+        card.style.transition = 'all 0.3s ease';
+    });
+    
+    // Apply enhanced card effects
+    const enhancedCards = document.querySelectorAll('.enhanced-card');
+    enhancedCards.forEach(card => {
+        card.style.background = 'rgba(255, 255, 255, 0.95)';
+        card.style.border = 'none';
+        card.style.borderRadius = '0.5rem';
+        card.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
+        card.style.transition = 'all 0.3s ease';
+        card.style.overflow = 'hidden';
+    });
+}
+
+function initializeModernFeatures() {
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.glass-card, .enhanced-card, .stats-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 1rem 2rem rgba(0, 0, 0, 0.25)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
+        });
+    });
+    
+    // Add pulse animation to buttons
+    const buttons = document.querySelectorAll('.btn, .nav-pill');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.05)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Fix theme toggle positioning
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.style.position = 'fixed';
+        themeToggle.style.top = '80px';
+        themeToggle.style.right = '20px';
+        themeToggle.style.zIndex = '1000';
+        themeToggle.style.background = '#0d6efd';
+        themeToggle.style.color = 'white';
+        themeToggle.style.border = 'none';
+        themeToggle.style.borderRadius = '50%';
+        themeToggle.style.width = '50px';
+        themeToggle.style.height = '50px';
+        themeToggle.style.display = 'flex';
+        themeToggle.style.alignItems = 'center';
+        themeToggle.style.justifyContent = 'center';
+        themeToggle.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
+        themeToggle.style.transition = 'all 0.3s ease';
+        themeToggle.style.cursor = 'pointer';
+        
+        // Add hover effect
+        themeToggle.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.boxShadow = '0 1rem 2rem rgba(0, 0, 0, 0.25)';
+        });
+        
+        themeToggle.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
+        });
+    }
+}
+
+// Force refresh styles every 2 seconds for the first 10 seconds
+let refreshCount = 0;
+const refreshInterval = setInterval(() => {
+    applyModernStyles();
+    refreshCount++;
+    if (refreshCount >= 5) {
+        clearInterval(refreshInterval);
+    }
+}, 2000);
+
+// Mobile responsive adjustments
+function applyMobileStyles() {
+    if (window.innerWidth <= 768) {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.style.top = '70px';
+            themeToggle.style.right = '15px';
+            themeToggle.style.width = '45px';
+            themeToggle.style.height = '45px';
+        }
+    }
+}
+
+// Apply mobile styles on load and resize
+window.addEventListener('load', applyMobileStyles);
+window.addEventListener('resize', applyMobileStyles);
