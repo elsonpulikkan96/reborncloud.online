@@ -20,7 +20,6 @@
 - [🚀 Features](#-features)
 - [🛠️ Technology Stack](#️-technology-stack)
 - [📁 Project Structure](#-project-structure)
-- [🔧 Local Development](#-local-development)
 - [☁️ AWS Infrastructure](#️-aws-infrastructure)
 - [🔐 Security Features](#-security-features)
 - [📊 Performance Metrics](#-performance-metrics)
@@ -290,7 +289,7 @@ SOFTWARE.
 ### **🏆 Key Achievements**
 - ✅ **Enterprise-Grade Security**: reCAPTCHA, rate limiting, security headers
 - ✅ **High Performance**: Sub-200ms response times, 99.9% uptime
-- ✅ **Cost Optimised**: $22.83/month for enterprise features
+- ✅ **Cost Optimised**: < $10/month for enterprise features
 - ✅ **Scalable Architecture**: Auto-scaling from 1-10 tasks
 - ✅ **Professional Design**: Modern, responsive, accessible
 - ✅ **Comprehensive Monitoring**: CloudWatch integration with custom metrics
