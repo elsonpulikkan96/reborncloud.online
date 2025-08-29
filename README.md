@@ -183,35 +183,19 @@ reborncloud.online/
 │   │   │       ├── 📄 devops-pipeline.jpg
 │   │   │       └── 📄 cloud-architecture.jpg
 │   │   └── 📁 documents/                  # Secure documents
-│   │       └── 📄 Elson-Ealias-Resume-2025.pdf # Protected resume file
+│   │       └── 📄 User-Resume-2025.pdf # Protected resume file
 │   │
 │   └── 📁 utils/                          # Utility modules
 │       └── 📄 helpers.py                  # Helper functions
-│
-├── 📁 deployment/                         # Deployment configurations & scripts
-│   ├── 📄 deploy-aws.sh                   # Main AWS deployment script
-│   ├── 📄 deploy-enterprise-production.sh # Enterprise deployment
-│   ├── 📄 deploy-professional-security.sh # Professional security deployment
-│   ├── 📄 quick-recaptcha-deploy.sh       # Quick reCAPTCHA deployment
-│   ├── 📄 verify-enterprise-deployment.sh # Deployment verification
-│   ├── 📄 task-definition.json            # ECS task definition
-│   └── 📄 service-definition.json         # ECS service definition
 │
 ├── 📁 security/                           # Security configurations
 │   ├── 📄 test-security.py                # Security testing script
 │   └── 📄 security-headers.conf           # Security headers configuration
 │
 ├── 📁 backups/                            # Deployment backups
-│   └── 📁 20250824_223754/                # Timestamped backup
 │       ├── 📄 current-task-definition.json
-│       ├── 📄 current-service.json
-│       ├── 📄 current-load-balancer.json
-│       └── 📄 current-target-group.json
 │
 └── 📁 docs/                               # Additional documentation
-    ├── 📄 COST_ANALYSIS.md                # Detailed cost breakdown
-    ├── 📄 PROJECT_TREE.md                 # Complete project structure
-    ├── 📄 API_DOCUMENTATION.md            # API endpoints documentation
     └── 📄 DEPLOYMENT_GUIDE.md             # Step-by-step deployment guide
 ```
 
