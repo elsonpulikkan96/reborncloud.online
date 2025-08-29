@@ -38,8 +38,7 @@
 ## 🏗️ **Architecture Overview**
 
 ### **High-Level Architecture**
-### **High-Level Architecture**
-
+```mermaid
 graph TB
     subgraph "Internet"
         U[Users] --> R53["Route 53 DNS"]
@@ -70,6 +69,7 @@ graph TB
         F2 --> S3
         S3 --> CF
     end
+
 ### **🏢 Enterprise Architecture Highlights**
 - **Serverless Containers**: AWS Fargate for zero-server management
 - **High Availability**: Multi-AZ deployment with auto-scaling
