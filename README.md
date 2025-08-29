@@ -313,10 +313,10 @@ SOFTWARE.
 
 ---
 
-**🚀 Built with ❤️ by [Elson Pulickeel Ealias](https://reborncloud.online) - Cloud Engineer & DevOps Specialist**
+**🚀 Built with ❤️ by [Elson Pulickeel Ealias] Live at: (https://reborncloud.online) - Cloud Engineer & DevOps Specialist**
 
 **⭐ If this project helped you, please consider giving it a star on GitHub!**
 
 ---
 
-*Last Updated: August 2025 | Version: 2.0.0 | Status: Production Ready*
+*Last Updated: August 2025 | v3.0.7 | Status: Production Ready*
