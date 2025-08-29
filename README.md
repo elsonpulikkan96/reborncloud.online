@@ -38,6 +38,7 @@
 ## 🏗️ **Architecture Overview**
 
 ### **High-Level Architecture**
+
 ```mermaid
 graph TB
     subgraph "Internet"
@@ -70,6 +71,20 @@ graph TB
         S3 --> CF
     end
 
+    subgraph "AWS Edge Services"
+        R53 --> CF["CloudFront CDN with ACM SSL/TLS"]
+
+    subgraph "Security & Monitoring"
+        F1 --> CW["CloudWatch Logs"]
+        F2 --> CW
+    end
+
+    subgraph "Storage & CDN"
+        F1 --> S3["S3 Static Assets"]
+        F2 --> S3
+        S3 --> CF
+    end
+```
 ### **🏢 Enterprise Architecture Highlights**
 - **Serverless Containers**: AWS Fargate for zero-server management
 - **High Availability**: Multi-AZ deployment with auto-scaling
