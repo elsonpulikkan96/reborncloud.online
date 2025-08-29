@@ -17,7 +17,6 @@
 ---
 
 ## 📋 **Table of Contents**
-- [🏗️ Architecture Overview](#️-architecture-overview)
 - [🚀 Features](#-features)
 - [🛠️ Technology Stack](#️-technology-stack)
 - [📁 Project Structure](#-project-structure)
@@ -35,55 +34,6 @@
 
 ---
 
-## 🏗️ **Architecture Overview**
-
-
-```mermaid
-graph TB
-    subgraph "Internet"
-        U[Users] --> R53["Route 53 DNS"]
-    end
-
-    subgraph "AWS Edge Services"
-        R53 --> CF["CloudFront CDN with ACM SSL/TLS"]
-    end
-    
-    subgraph "AWS Fargate Public Service"
-        CF --> F1["Fargate Task 1 (256 CPU, 512 MB Mem)"]
-        CF --> F2["Fargate Task 2 (Auto-Scaled)"]
-    end
-    
-    subgraph "Container Image Source"
-        F1 -.-> ECR["ECR Repository"]
-        F2 -.-> ECR
-        ECR --> SEC["Security Scanning"]
-    end
-    
-    subgraph "Security & Monitoring"
-        F1 --> CW["CloudWatch Logs"]
-        F2 --> CW
-    end
-    
-    subgraph "Storage & CDN"
-        F1 --> S3["S3 Static Assets"]
-        F2 --> S3
-        S3 --> CF
-    end
-
-    subgraph "AWS Edge Services"
-        R53 --> CF["CloudFront CDN with ACM SSL/TLS"]
-
-    subgraph "Security & Monitoring"
-        F1 --> CW["CloudWatch Logs"]
-        F2 --> CW
-    end
-
-    subgraph "Storage & CDN"
-        F1 --> S3["S3 Static Assets"]
-        F2 --> S3
-        S3 --> CF
-    end
-```
 ### **🏢 Enterprise Architecture Highlights**
 - **Serverless Containers**: AWS Fargate for zero-server management
 - **High Availability**: Multi-AZ deployment with auto-scaling
