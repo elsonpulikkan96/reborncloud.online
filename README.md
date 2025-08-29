@@ -38,33 +38,32 @@
 ## 🏗️ **Architecture Overview**
 
 ### **High-Level Architecture**
+### **High-Level Architecture**
+
 ```mermaid
 graph TB
     subgraph "Internet"
-        U[Users] --> CF[CloudFront CDN]
+        U[Users] --> R53[Route 53 DNS]
+    end
+
+    subgraph "AWS Edge Services"
+        R53 --> CF[CloudFront CDN with ACM SSL/TLS]
     end
     
-    subgraph "AWS Route 53"
-        CF --> R53[Route 53 DNS]
+    subgraph "AWS Fargate Public Service"
+        CF --> F1[Fargate Task 1 (256 CPU, 512 MB Mem)]
+        CF --> F2[Fargate Task 2 (Auto-Scaled)]
     end
     
-    subgraph "Application Load Balancer"
-        R53 --> ALB[ALB with SSL/TLS]
-    end
-    
-    subgraph "AWS Fargate Cluster"
-        ALB --> TG[Target Group]
-        TG --> F1[Fargate Task 1]
-        TG --> F2[Fargate Task 2]
-        F1 --> ECR[ECR Repository]
-        F2 --> ECR
+    subgraph "Container Image Source"
+        F1 -.-> ECR[ECR Repository]
+        F2 -.-> ECR
+        ECR --> SEC[Security Scanning]
     end
     
     subgraph "Security & Monitoring"
         F1 --> CW[CloudWatch Logs]
         F2 --> CW
-        ALB --> WAF[AWS WAF]
-        ECR --> SEC[Security Scanning]
     end
     
     subgraph "Storage & CDN"
