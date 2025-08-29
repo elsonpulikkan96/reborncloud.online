@@ -37,7 +37,6 @@
 
 ## 🏗️ **Architecture Overview**
 
-### **High-Level Architecture**
 
 ```mermaid
 graph TB
