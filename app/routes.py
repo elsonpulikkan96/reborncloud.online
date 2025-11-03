@@ -12,10 +12,10 @@ RESUME_DATA = {
     "personal_info": {
         "name": "Elson Pulickeel Ealias",
         "title": "Cloud Engineer | DevOps Engineer | SRE",
-        "email": "elsonpulikkan@gmail.com",
-        "phone": "+91 9562385469",
+        "email": "elsonpulikkan@gmail.com", "admin@elsondevops.cloud",
+        "phone": "+91 9562385469","+91 8921754319",
         "location": "Pulickeel House, Pazhoor P.O, Piravom, Kerala India. Pin:686664",
-        "website": "https://reborncloud.online/",
+        "website": "https://elsondevops.cloud/",
         "github": "https://github.com/elsonpulikkan96",
         "linkedin": "https://linkedin.com/in/elsondevops",
         "medium": "https://medium.com/@elsonpulikkan",
@@ -27,7 +27,7 @@ RESUME_DATA = {
             "position": "Cloud Operation Engineer - 2",
             "company": "EPI-USE India Pvt Ltd",
             "location": "Kochi, India",
-            "duration": "10/2024 – Present",
+            "duration": "10/2024 – 09/2025",
             "description": "Managing Uptime, High Availability of SAP S/4HANA infrastructure on AWS for large-scale enterprise clients.",
             "responsibilities": [
                 "Managed Uptime, High Availability of SAP S/4HANA infrastructure on AWS for large-scale enterprise clients",
